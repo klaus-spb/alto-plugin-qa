@@ -46,14 +46,14 @@ class PluginQa_ActionAjax extends PluginQa_Inherits_ActionAjax {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		}
-		if ($oComment->getTargetType()!='topic') {
+		if ($oComment->getTargetType() == 'talk') {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		}
 		
 		$oTopic = $this->Topic_GetTopicById($oComment->getTargetId());
 		
-		if($oTopic->getIsAllowBestComment() && $oComment->isBestable()){			
+		if($oComment->isBestable() && $oTopic->getIsAllowBestComment() ){			
 			
 			if($oComment->getCommentId()==$oComment->getTarget()->getBestCommentId()){				
 				$oTopic->setBestCommentId(0);

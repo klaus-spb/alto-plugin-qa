@@ -1,5 +1,5 @@
 {strip}
-	{if $oComment->getTarget()->getIsAllowBestComment() && $oComment->isBestable()}
+	{if $oComment->isBestable() && $oComment->getTarget()->getIsAllowBestComment()}
 		<li>
 			<a href="#"
 			   class="link link-blue-red link-clear comment-reply" id="set_best_comment_id_{$oComment->getId()}"
