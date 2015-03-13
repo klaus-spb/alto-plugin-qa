@@ -42,20 +42,27 @@ class PluginQa_ActionAjax extends PluginQa_Inherits_ActionAjax {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		} 
-		if($oComment->getTargetType()=='topic' && in_array($oComment->getTarget()->getType(), Config::Get('plugin.qa.allow_topic_type')) ){
+		if (!($oTopic=$this->Topic_GetTopicById($oComment->getTargetId()))) {
+			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
+			return;
+		}
+		if ($oComment->getTargetType()!='topic') {
+			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
+			return;
+		}
 		
-			$oTopic = $this->Topic_GetTopicById($oComment->getTargetId());
+		$oTopic = $this->Topic_GetTopicById($oComment->getTargetId());
+		
+		if($oTopic->getIsAllowBestComment() && $oComment->isBestable()){			
 			
-			if($oComment->getCommentId()==$oComment->getTarget()->getBestCommentId()){
-				
+			if($oComment->getCommentId()==$oComment->getTarget()->getBestCommentId()){				
 				$oTopic->setBestCommentId(0);
 				$this->Message_AddNoticeSingle($this->Lang_Get('plugin.qa.comment_unset_best'), $this->Lang_Get('attention'));
 			}else{
 				$oTopic->setBestCommentId($oComment->getCommentId());
 				$this->Message_AddNoticeSingle($this->Lang_Get('plugin.qa.comment_set_best'), $this->Lang_Get('attention'));
 			}
-			$this->Topic_UpdateTopic($oTopic);
-			
+			$this->Topic_UpdateTopic($oTopic);			
 		}
 		
 	}

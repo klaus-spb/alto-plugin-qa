@@ -1,5 +1,5 @@
 {strip}
-	{if $oComment->getTargetType()=='topic' && ($oComment->isDeletable() || ( E::IsUser() && $oComment->getTarget()->getUserId()== E::UserId() )) && in_array($oComment->getTarget()->getType(), Config::Get('plugin.qa.allow_topic_type')) }
+	{if $oComment->getTarget()->getIsAllowBestComment() && $oComment->isBestable()}
 		<li>
 			<a href="#"
 			   class="link link-blue-red link-clear comment-reply" id="set_best_comment_id_{$oComment->getId()}"

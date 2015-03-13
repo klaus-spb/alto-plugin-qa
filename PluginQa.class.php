@@ -17,7 +17,7 @@ class PluginQa extends Plugin {
     // Объявление переопределений (модули, мапперы и сущности)
     protected $aInherits=array(
 		'action' => array('ActionAjax'),
-		'entity'  =>array('ModuleTopic_EntityTopic'),
+		'entity'  =>array('ModuleTopic_EntityTopic', 'ModuleComment_EntityComment'),
 
     );
 
