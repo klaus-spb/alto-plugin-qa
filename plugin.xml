@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<id>qa</id>
+    <name>
+        <lang name="default">Qa</lang>
+        <lang name="russian">Qa</lang>
+    </name>
+    <author>
+        <lang name="default">Klaus</lang>
+        <lang name="russian">Klaus</lang>
+    </author>
+    <homepage>http://altocms.ru</homepage>
+    <version>0.5.0</version>
+    <dirname>qa</dirname>
+    <requires>
+        <alto>
+             <version>1.1.0</version>
+        </alto>
+		<system>
+            <php>5.3.0</php>
+        </system>
+    </requires>
+    <description>
+        <lang name="default">Aloow choose best comment</lang>
+        <lang name="russian">Позволяет выбрать лучший комментарий</lang>
+    </description>
+</plugin>
