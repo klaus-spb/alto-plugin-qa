@@ -34,7 +34,7 @@ class PluginQa extends Plugin {
 
     // Инициализация плагина
     public function Init() {
-        E::ModuleViewer()->AppendScript(Plugin::GetTemplateDir(__CLASS__)."assets/js/qa.js"); // Добавление своего JS
+        $this->Viewer_AppendScript(Plugin::GetTemplateDir(__CLASS__)."assets/js/qa.js"); // Добавление своего JS
 	}
 }
 ?>
