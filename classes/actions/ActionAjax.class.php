@@ -24,25 +24,30 @@ class PluginQa_ActionAjax extends PluginQa_Inherits_ActionAjax {
 	protected function EventSetBestComment() {
 
 		if(!$this->oUserCurrent){
-			 $this->Message_AddErrorSingle($this->Lang_Get('need_authorization'), $this->Lang_Get('error'));
+			$this->Message_AddErrorSingle($this->Lang_Get('need_authorization'), $this->Lang_Get('error'));
 			return;
 		}
 
 		if (func_check(getRequest('commentId',null,'post'),'id',1,11))$commentId=getRequest('commentId',null,'post');
 		
 		if (!($oComment=$this->Comment_GetCommentById($commentId))) {
-			 $this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
+			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		} 
 		if($oComment->getTargetType()=='topic' && in_array($oComment->getTarget()->getType(), Config::Get('plugin.qa.allow_topic_type')) ){
 		
 			$oTopic = $this->Topic_GetTopicById($oComment->getTargetId());
 			
-			$oTopic->setBestCommentId($oComment->getCommentId());
-			
+			if($oComment->getCommentId()==$oComment->getTarget()->getBestCommentId()){
+				
+				$oTopic->setBestCommentId(0);
+				$this->Message_AddNoticeSingle('Комментарий больше не является правильным ответом',  $this->Lang_Get('attention'));
+			}else{
+				$oTopic->setBestCommentId($oComment->getCommentId());
+				$this->Message_AddNoticeSingle('Комментарий назначен правильным ответом',  $this->Lang_Get('attention'));
+			}
 			$this->Topic_UpdateTopic($oTopic);
 			
-			$this->Message_AddNoticeSingle('Комментарий назначен правильным ответом', E::ModuleLang()->Get('attention'));
 		}
 		
 	}
