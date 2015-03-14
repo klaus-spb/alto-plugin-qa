@@ -17,6 +17,18 @@ class PluginQa_ModuleComment_EntityComment extends PluginQa_Inherit_ModuleCommen
         return false;
     }
 	
+	public function isDeletable() {
+
+        if ($this->getTargetType() != 'talk' && ($oUser = E::ModuleUser()->GetUserCurrent()) && $this->getTarget()->getBestCommentId()!=$this->getId()) {
+            if ($oUser->isAdministrator()) {
+                return true;
+            }
+            if (($oBlog = $this->getTargetBlog()) && E::ModuleACL()->CheckBlogDeleteComment($oBlog, $oUser)) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 }
 
