@@ -34,7 +34,7 @@ class PluginQa_ActionAjax extends PluginQa_Inherits_ActionAjax {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		}
-		if (!$oComment->isDeletable() && !(E::IsUser() && $oComment->getTarget()->getUserId()== E::UserId())) {
+		if (!$oComment->isBestable()) {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		} 
@@ -43,10 +43,6 @@ class PluginQa_ActionAjax extends PluginQa_Inherits_ActionAjax {
 			return;
 		} 
 		if (!($oTopic=$this->Topic_GetTopicById($oComment->getTargetId()))) {
-			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
-			return;
-		}
-		if ($oComment->getTargetType() == 'talk') {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
 			return;
 		}
