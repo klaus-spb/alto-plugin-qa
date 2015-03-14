@@ -1,8 +1,7 @@
 jQuery(document).ready(function($){
 	
-	ls.comments.setbest = function(idComment,  targetId) {
+	ls.comments.setbest = function(obj, idComment) {
 		var params = {
-            targetId: targetId,
             commentId: idComment
         };
         ls.ajax(aRouter.ajax + 'setbestcomment/', params, function (result) {
@@ -14,6 +13,7 @@ jQuery(document).ready(function($){
                 ls.msg.error(null, result.sMsg);
             } else {
 				ls.msg.notice(null, result.sMsg);
+				$(obj).text(result.sTextToggle);
             }
         }.bind(this));
     };

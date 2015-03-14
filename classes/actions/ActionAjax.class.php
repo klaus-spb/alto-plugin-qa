@@ -57,13 +57,22 @@ class PluginQa_ActionAjax extends PluginQa_Inherits_ActionAjax {
 			
 			if($oComment->getCommentId()==$oComment->getTarget()->getBestCommentId()){				
 				$oTopic->setBestCommentId(0);
-				$this->Message_AddNoticeSingle($this->Lang_Get('plugin.qa.comment_unset_best'), $this->Lang_Get('attention'));
+				
+				$sMsg = $this->Lang_Get('plugin.qa.comment_unset_best');
+				$sTextToggle = $this->Lang_Get('plugin.qa.setbest');
 			}else{
-				$oTopic->setBestCommentId($oComment->getCommentId());
-				$this->Message_AddNoticeSingle($this->Lang_Get('plugin.qa.comment_set_best'), $this->Lang_Get('attention'));
+				$oTopic->setBestCommentId($oComment->getCommentId());	
+				
+				$sMsg = $this->Lang_Get('plugin.qa.comment_set_best');
+				$sTextToggle = $this->Lang_Get('plugin.qa.unsetbest');
 			}
-			$this->Topic_UpdateTopic($oTopic);			
+			$this->Topic_UpdateTopic($oTopic);
+			
+			$this->Message_AddNoticeSingle($sMsg, $this->Lang_Get('attention'));
+			$this->Viewer_AssignAjax('sTextToggle', $sTextToggle);			
 		}
+		
+		
 		
 	}
 	
