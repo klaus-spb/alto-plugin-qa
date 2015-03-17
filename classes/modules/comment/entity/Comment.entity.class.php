@@ -31,11 +31,11 @@ class PluginQa_ModuleComment_EntityComment extends PluginQa_Inherit_ModuleCommen
     public function isDeletable()
     {
 
-        if ($this->getTargetType() != 'talk' && ($oUser = E::ModuleUser()->GetUserCurrent()) && $this->getTarget()->getBestCommentId() != $this->getId()) {
+        if ($this->getTargetType() != 'talk' && ($oUser = $this->User_GetUserCurrent()) && $this->getTarget()->getBestCommentId() != $this->getId()) {
             if ($oUser->isAdministrator()) {
                 return true;
             }
-            if (($oBlog = $this->getTargetBlog()) && E::ModuleACL()->CheckBlogDeleteComment($oBlog, $oUser)) {
+            if (($oBlog = $this->getTargetBlog()) && $this->ACL_CheckBlogDeleteComment($oBlog, $oUser)) {
                 return true;
             }
         }
